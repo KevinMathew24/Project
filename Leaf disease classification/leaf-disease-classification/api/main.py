@@ -8,6 +8,7 @@ from io import BytesIO
 from PIL import Image
 import tensorflow as tf
 
+limit = .70
 app = FastAPI()
 
 origins = [
@@ -23,9 +24,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("D:/Uni Crap/Leaf-Disease-Classification/Phase2/leaf-disease-classification/models/3")
+MODEL = tf.keras.models.load_model("D:/Project/Leaf disease classification/leaf-disease-classification/models/4")
 
-CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
+CLASS_NAMES = ["Potato Early Blight", "Potato Late Blight", "Potato Healthy","Tomato Early Blight","Tomato Late Blight","Tomato Healthy"]
 
 @app.get("/ping")
 async def ping():
@@ -48,10 +49,16 @@ async def predict(
 
     predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
     confidence = np.max(predictions[0])
-    return {
-        'class': predicted_class,
-        'confidence': float(confidence)
-    }
+    if(float(confidence) < float(limit)):
+        return {
+          'class': "Unable to Predict. Low Confidence",
+          'confidence': "-"
+        }
+    else:     
+        return {
+          'class': predicted_class,
+          'confidence': float(confidence)
+        }
 
 if __name__ == "__main__":
     uvicorn.run(app, host='localhost', port=8000)

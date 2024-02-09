@@ -213,6 +213,14 @@ export const ImageUpload = () => {
     confidence = (parseFloat(data.confidence) * 100).toFixed(2);
   }
 
+  function CheckNaN(conf) { if(isNaN(conf)){
+                              return "-"}
+                            else{
+                              return conf
+                              }
+  }
+
+
   return (
     <React.Fragment>
       <AppBar position="static" className={classes.appbar}>
@@ -265,7 +273,8 @@ export const ImageUpload = () => {
                         <TableCell component="th" scope="row" className={classes.tableCell}>
                           {data.class}
                         </TableCell>
-                        <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
+                        
+                        <TableCell align="right" className={classes.tableCell}>{CheckNaN(confidence)}%</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
