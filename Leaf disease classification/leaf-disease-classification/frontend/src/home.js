@@ -14,6 +14,7 @@ import image from "./bg.png";
 import { DropzoneArea } from 'material-ui-dropzone';
 import { common } from '@material-ui/core/colors';
 import Clear from '@material-ui/icons/Clear';
+import { remedies_dataset } from "./remedies_dataset";
 
 
 
@@ -62,13 +63,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
-    height: "93vh",
+    minHeight: "93vh",
     marginTop: "8px",
   },
   imageCard: {
     margin: "auto",
     maxWidth: 400,
-    height: 500,
     backgroundColor: 'transparent',
     boxShadow: '0px 9px 70px 0px rgb(0 0 0 / 30%) !important',
     borderRadius: '15px',
@@ -115,6 +115,14 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000a6 !important',
     fontWeight: 'bolder',
     padding: '1px 24px 1px 16px',
+  },
+  tableCell2: {
+    fontSize: '18px',
+    backgroundColor: 'transparent !important',
+    borderColor: 'transparent !important',
+    color: '#000000a6 !important',
+    fontWeight: 'bolder',
+    padding: '10px 0px 0px 0px',
   },
   tableBody: {
     backgroundColor: 'transparent !important',
@@ -222,6 +230,7 @@ export const ImageUpload = () => {
   function confidenceOutput(conf) { if(isNumber(conf)) { return conf; } else { return "-" } }
 
 
+
   return (
     <React.Fragment>
       <AppBar position="static" className={classes.appbar}>
@@ -266,7 +275,7 @@ export const ImageUpload = () => {
                     <TableHead className={classes.tableHead}>
                       <TableRow className={classes.tableRow}>
                         <TableCell className={classes.tableCell1}>Label:</TableCell>
-                        <TableCell align="right" className={classes.tableCell1}>Confidence:</TableCell>
+                        <TableCell className={classes.tableCell1}>Confidence:</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody className={classes.tableBody}>
@@ -274,11 +283,15 @@ export const ImageUpload = () => {
                         <TableCell component="th" scope="row" className={classes.tableCell}>
                           {data.class}
                         </TableCell>
-                        <TableCell align="right" className={classes.tableCell}>{confidenceOutput(confidence)}%</TableCell>
+                        <TableCell className={classes.tableCell}>{confidenceOutput(confidence)} %</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
+                  <TableCell className={classes.tableCell2}>Remedies:</TableCell>
                 </TableContainer>
+                <Typography variant="subtitle1" gutterBottom style={{marginTop: "5px"}}>
+                  {remedies_dataset[data.class] ?? "no disease detected "}
+                </Typography>
               </CardContent>}
               {isLoading && <CardContent className={classes.detail}>
                 <CircularProgress color="secondary" className={classes.loader} />

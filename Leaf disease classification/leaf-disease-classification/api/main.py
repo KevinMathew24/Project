@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("D:/Project/Leaf disease classification/leaf-disease-classification/models/4")
+MODEL = tf.keras.models.load_model("D:/Project/Leaf disease classification/leaf-disease-classification/models/5")
 
 CLASS_NAMES = ["Potato Early Blight", "Potato Late Blight", "Potato Healthy","Tomato Early Blight","Tomato Late Blight","Tomato Healthy"]
 
